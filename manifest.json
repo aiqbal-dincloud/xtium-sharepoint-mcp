@@ -8,14 +8,14 @@
   "author": {
     "name": "XTIUM",
     "email": "aaqib.iqbal@xtium.com",
-    "url": "https://github.com/aiqbal-dincloud/xtium-sharepoint-mcp"
+    "url": "https://github.com/dinCloud/xtium-sharepoint-mcp"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aiqbal-dincloud/xtium-sharepoint-mcp.git"
+    "url": "https://github.com/dinCloud/xtium-sharepoint-mcp.git"
   },
-  "homepage": "https://github.com/aiqbal-dincloud/xtium-sharepoint-mcp",
-  "documentation": "https://github.com/aiqbal-dincloud/xtium-sharepoint-mcp/blob/main/docs/mcpb-install.md",
+  "homepage": "https://github.com/dinCloud/xtium-sharepoint-mcp",
+  "documentation": "https://github.com/dinCloud/xtium-sharepoint-mcp/blob/main/docs/mcpb-install.md",
   "icon": "icon.png",
   "server": {
     "type": "uv",
@@ -70,7 +70,7 @@
   "keywords": ["sharepoint", "onedrive", "microsoft-graph", "entra", "local", "mcp"],
   "license": "LicenseRef-XTIUM-Proprietary",
   "privacy_policies": [
-    "https://github.com/aiqbal-dincloud/xtium-sharepoint-mcp/blob/main/README.md#privacy-policy"
+    "https://github.com/dinCloud/xtium-sharepoint-mcp/blob/main/README.md#privacy-policy"
   ],
   "compatibility": {
     "platforms": ["darwin", "win32"],
