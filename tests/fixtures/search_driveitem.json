@@ -1,0 +1,66 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(microsoft.graph.searchResponse)",
+  "value": [
+    {
+      "searchTerms": ["budget"],
+      "hitsContainers": [
+        {
+          "total": 3,
+          "moreResultsAvailable": true,
+          "hits": [
+            {
+              "hitId": "01FINBUDGET",
+              "rank": 1,
+              "summary": "<c0>Budget</c0> SECRET-EXCERPT for FY27 headcount",
+              "resource": {
+                "@odata.type": "#microsoft.graph.driveItem",
+                "id": "01FINBUDGET",
+                "name": "Budget FY27.docx",
+                "size": 18234,
+                "webUrl": "https://contoso.sharepoint.com/sites/Finance/Shared%20Documents/Budget%20FY27.docx",
+                "lastModifiedDateTime": "2026-10-01T10:00:00Z",
+                "@microsoft.graph.downloadUrl": "https://contoso.sharepoint.com/_layouts/15/download.aspx?tempauth=SECRET-DOWNLOAD",
+                "parentReference": {
+                  "driveId": "b!FinanceDrive01",
+                  "siteId": "contoso.sharepoint.com,11111111-1111-1111-1111-111111111111,22222222-2222-2222-2222-222222222222",
+                  "id": "01FINROOT"
+                },
+                "file": {"mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}
+              }
+            },
+            {
+              "hitId": "01HRPLAN",
+              "rank": 2,
+              "summary": "HR <c0>budget</c0> SECRET-EXCERPT-2",
+              "resource": {
+                "@odata.type": "#microsoft.graph.driveItem",
+                "id": "01HRPLAN",
+                "name": "HR plan.pdf",
+                "size": 52011,
+                "webUrl": "https://contoso.sharepoint.com/sites/HR/Shared%20Documents/HR%20plan.pdf",
+                "lastModifiedDateTime": "2026-09-12T08:30:00Z",
+                "parentReference": {
+                  "driveId": "b!HrDrive02",
+                  "siteId": "contoso.sharepoint.com,33333333-3333-3333-3333-333333333333,44444444-4444-4444-4444-444444444444",
+                  "id": "01HRROOT"
+                },
+                "file": {"mimeType": "application/pdf"}
+              }
+            },
+            {
+              "hitId": "01NODRIVE",
+              "rank": 3,
+              "summary": "orphan",
+              "resource": {
+                "@odata.type": "#microsoft.graph.driveItem",
+                "id": "01NODRIVE",
+                "name": "orphan.txt",
+                "parentReference": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

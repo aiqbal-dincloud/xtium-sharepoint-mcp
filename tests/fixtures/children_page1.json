@@ -1,0 +1,26 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#drives('b%21FinanceDrive01')/root/children(id,name,size,file,folder,cTag,lastModifiedDateTime,webUrl,parentReference)",
+  "@odata.nextLink": "https://graph.microsoft.com/v1.0/drives/b!FinanceDrive01/root/children?$top=50&$select=id,name&$skiptoken=UGFnZWQ9VFJVRSZwX0lEPTI",
+  "value": [
+    {
+      "id": "01FOLDERQ3",
+      "name": "Q3",
+      "lastModifiedDateTime": "2026-09-30T12:00:00Z",
+      "webUrl": "https://contoso.sharepoint.com/sites/Finance/Shared%20Documents/Q3",
+      "cTag": "\"c:{AAAA},0\"",
+      "folder": {"childCount": 4},
+      "parentReference": {"driveId": "b!FinanceDrive01", "id": "01FINROOT", "siteId": "contoso.sharepoint.com,11111111-1111-1111-1111-111111111111,22222222-2222-2222-2222-222222222222"}
+    },
+    {
+      "id": "01NOTESTXT",
+      "name": "notes.txt",
+      "size": 42,
+      "lastModifiedDateTime": "2026-10-02T09:00:00Z",
+      "webUrl": "https://contoso.sharepoint.com/sites/Finance/Shared%20Documents/notes.txt",
+      "cTag": "\"c:{BBBB},3\"",
+      "file": {"mimeType": "text/plain"},
+      "@microsoft.graph.downloadUrl": "https://contoso.sharepoint.com/_layouts/15/download.aspx?tempauth=SECRET-DOWNLOAD",
+      "parentReference": {"driveId": "b!FinanceDrive01", "id": "01FINROOT", "siteId": "contoso.sharepoint.com,11111111-1111-1111-1111-111111111111,22222222-2222-2222-2222-222222222222"}
+    }
+  ]
+}
