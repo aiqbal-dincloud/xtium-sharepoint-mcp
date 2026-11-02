@@ -12,8 +12,10 @@ build/
 .env
 .env.*
 *.mcpb
+.claude-plugin/
 .cursor/
 canvases/
 docs/wi-31-pilot-packet.md
+docs/directory-submission.md
 tests/
 scripts/provision_test_app.py

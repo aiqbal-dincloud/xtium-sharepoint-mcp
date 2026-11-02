@@ -45,13 +45,15 @@ uv sync
 
 ### 3. Add it to Claude Desktop
 
-**Preferred (pilot packaging):** install the MCPB desktop extension so users enter tenant/client IDs in Claude’s UI:
+**Preferred (pilot packaging):** Claude **plugin** + embedded MCPB so users enter tenant/client IDs in Claude’s UI:
 
 1. Build: `.\scripts\pack_mcpb.ps1` → `dist/xtium-sharepoint-0.1.0.mcpb`
-2. In Claude: **Settings → Extensions → Install Extension…** (or double-click / drag the `.mcpb`)
+2. Install MCPB: **Settings → Extensions → Install Extension…** (or double-click / drag), **or** install the plugin once it is listed / sideloaded
 3. Enter **Entra tenant ID** and **application (client) ID**, then finish
 
-Details: [docs/mcpb-install.md](docs/mcpb-install.md).
+Directory listing uses a **plugin** submission (not the remote MCP connector form): [docs/directory-submission.md](docs/directory-submission.md).  
+Install details: [docs/mcpb-install.md](docs/mcpb-install.md).
+
 
 **Developer fallback** — edit Claude’s `mcpServers` JSON (MSIX path is under `%LOCALAPPDATA%\Claude-Data\…\claude_desktop_config.json`):
 
@@ -100,6 +102,20 @@ If the client does not refresh its tool list after sign-in, restart it.
   `client-request-id`. The audit log is at `%LOCALAPPDATA%\xtium-sharepoint-mcp\audit\audit-YYYY-MM-DD.jsonl`
   and contains hashed identifiers only.
 
+## Privacy Policy
+
+This connector is designed so **XTIUM does not host SharePoint content or Microsoft tokens**.
+
+| Topic | Practice |
+| --- | --- |
+| **Data collection** | On the user’s device only: MSAL token cache (OS-encrypted), opaque file handles, and a local audit log of hashed identifiers and Graph correlation IDs. No document text is written to disk by the connector. |
+| **Usage and storage** | Graph calls run from the user’s machine to Microsoft. Extracted file text is returned once in the MCP response and is not retained by the connector. Default data directory: `%LOCALAPPDATA%\xtium-sharepoint-mcp` (Windows) or the configured `XTIUM_SP_DATA_DIR`. |
+| **Third-party sharing** | Microsoft Graph / Entra receive authentication and API traffic as with any Graph client. Anthropic/Claude receives only what the local MCP host sends in the conversation (tool results). XTIUM cloud services are not in the token or download path for this local connector. |
+| **Data retention** | Audit lines default to 30 days (`XTIUM_SP_AUDIT_RETENTION_DAYS`). Sign-out deletes the token cache and invalidates handles. Users may delete the data directory to wipe local state. |
+| **Contact** | XTIUM SharePoint MCP maintainers — `aaqib.iqbal@xtium.com` (pilot). |
+
+Customer Entra admins remain responsible for app consent, Conditional Access, and user revocation in their tenant.
+
 ## Development
 
 ```powershell
@@ -107,4 +123,5 @@ uv run pytest
 uv run ruff check src tests
 uv run python scripts/smoke_stdio.py                    # stdio round trip as a host would run it
 uv run python scripts/smoke_stdio.py sharepoint_search '{"query":"budget"}'
+.\scripts\pack_mcpb.ps1                                 # Claude Desktop / plugin MCPB
 ```

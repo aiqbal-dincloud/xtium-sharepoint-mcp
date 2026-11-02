@@ -68,7 +68,10 @@
   ],
   "tools_generated": true,
   "keywords": ["sharepoint", "onedrive", "microsoft-graph", "entra", "local", "mcp"],
-  "license": "UNLICENSED",
+  "license": "LicenseRef-XTIUM-Proprietary",
+  "privacy_policies": [
+    "https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp/blob/main/README.md#privacy-policy"
+  ],
   "compatibility": {
     "platforms": ["darwin", "win32"],
     "runtimes": {
