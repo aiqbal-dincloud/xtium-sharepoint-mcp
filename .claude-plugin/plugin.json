@@ -5,10 +5,10 @@
   "author": {
     "name": "XTIUM",
     "email": "aaqib.iqbal@xtium.com",
-    "url": "https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp"
+    "url": "https://github.com/aiqbal-dincloud/xtium-sharepoint-mcp"
   },
-  "homepage": "https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp/blob/main/docs/mcpb-install.md",
-  "repository": "https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp",
+  "homepage": "https://github.com/aiqbal-dincloud/xtium-sharepoint-mcp/blob/main/docs/mcpb-install.md",
+  "repository": "https://github.com/aiqbal-dincloud/xtium-sharepoint-mcp",
   "license": "LicenseRef-XTIUM-Proprietary",
   "keywords": ["sharepoint", "onedrive", "microsoft-graph", "entra", "mcp", "local"],
   "mcpServers": "./dist/xtium-sharepoint-0.1.0.mcpb"
