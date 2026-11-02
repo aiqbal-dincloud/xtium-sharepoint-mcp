@@ -32,6 +32,7 @@ No secrets, tokens, UPNs or file content belong in this file or in Jira.
 | Wrong tenant: configure another tenant ID, sign in, and get `wrong_tenant` | Pass — fake tenant failed closed at startup (`AADSTS90002`). Real tenant restored. |
 | Wrong client: configure an unregistered client ID and get `wrong_client` (AADSTS700016) | Pass — Entra `AADSTS700016`, application not found. Real client id restored. |
 | Wrong audience: covered offline; live, the connector only ever requests Graph scopes | Offline pass |
-| User A vs User B search and read differ by ACL | Pending (WI-31; needs second user) |
-| Claude Code | Not tested |
-| Cursor | Not tested |
+| User A vs User B search and read differ by ACL | Pass — see `docs/wi-31-pilot-packet.md` (2026-10-30 Aaqib/Usama on f3zj) |
+| Claude Code | Not tested (host MCP config + interactive sign-in still required) |
+| Cursor | Not tested (host MCP config + interactive sign-in still required) |
+| Private GHE repo | Landed 2026-11-02 — `https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp` |

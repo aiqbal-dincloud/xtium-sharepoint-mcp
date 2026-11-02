@@ -199,9 +199,12 @@ class AuthSession:
         with self._lock:
             # Empty or missing cache: do not construct MSAL (it hits OIDC discovery).
             # Lets `serve` and stdio smoke start signed-out without a live tenant.
-            cache = self._settings.cache_path
-            if (not cache.exists()) or cache.stat().st_size == 0:
-                return None
+            # Skip only when we would have to build a real client; an injected app
+            # (tests / pre-bound session) must still see cached accounts.
+            if self._app is None:
+                cache = self._settings.cache_path
+                if (not cache.exists()) or cache.stat().st_size == 0:
+                    return None
             try:
                 return self._silent(force_refresh=False)[0]
             except AuthError as exc:
