@@ -36,3 +36,4 @@ No secrets, tokens, UPNs or file content belong in this file or in Jira.
 | Claude Code | Not tested (host MCP config + interactive sign-in still required) |
 | Cursor | Not tested (host MCP config + interactive sign-in still required) |
 | Private GHE repo | Landed 2026-11-02 — `https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp` |
+| Claude Desktop MCPB packaging | Landed 2026-11-03 — `manifest.json` + `scripts/pack_mcpb.ps1` → `dist/*.mcpb`; install via Settings → Extensions; user_config tenant/client IDs ([docs/mcpb-install.md](mcpb-install.md)). Live install smoke on this workstation still pending. |

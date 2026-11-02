@@ -1,0 +1,92 @@
+{
+  "manifest_version": "0.4",
+  "name": "xtium-sharepoint",
+  "display_name": "XTIUM SharePoint (local)",
+  "version": "0.1.0",
+  "description": "Read-only SharePoint/OneDrive MCP on your device via customer Entra public-client sign-in. Tokens and file content stay local.",
+  "long_description": "Local stdio MCP connector for Claude Desktop (AIDATA-3958 pilot).\n\n- Signs in as **you** with the customer's Entra **public** desktop app (no client secret).\n- Calls Microsoft Graph directly from this machine. XTIUM never sees tokens or document bytes.\n- Configure **Tenant ID** and **Client ID** at install time; then run `sharepoint_sign_in` in chat.\n\nRequires a customer (or lab) app registration: single-tenant, public client, redirect `http://localhost`, delegated `User.Read`, `Sites.Read.All`, `Files.Read.All` (+ OIDC).",
+  "author": {
+    "name": "XTIUM",
+    "email": "aaqib.iqbal@xtium.com",
+    "url": "https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp.git"
+  },
+  "homepage": "https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp",
+  "documentation": "https://xtium.ghe.com/XTIUM/xtium-sharepoint-mcp/blob/main/docs/mcpb-install.md",
+  "icon": "icon.png",
+  "server": {
+    "type": "uv",
+    "entry_point": "src/xtium_sharepoint_mcp/__main__.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "${__dirname}",
+        "python",
+        "-m",
+        "xtium_sharepoint_mcp"
+      ],
+      "env": {
+        "XTIUM_SP_TENANT_ID": "${user_config.tenant_id}",
+        "XTIUM_SP_CLIENT_ID": "${user_config.client_id}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "get_connection_status",
+      "description": "Sign-in state, granted scopes, and available tools"
+    },
+    {
+      "name": "sharepoint_sign_in",
+      "description": "Open the browser for Microsoft sign-in (customer tenant)"
+    },
+    {
+      "name": "sharepoint_sign_out",
+      "description": "Clear the local session and invalidate handles"
+    },
+    {
+      "name": "sharepoint_search",
+      "description": "Search files/sites; returns metadata and opaque handles only"
+    },
+    {
+      "name": "sharepoint_get_site",
+      "description": "Site details and document libraries"
+    },
+    {
+      "name": "sharepoint_list_folder",
+      "description": "List folder contents with paging"
+    },
+    {
+      "name": "sharepoint_read_file",
+      "description": "Extract text from PDF, DOCX, or plain text within size caps"
+    }
+  ],
+  "tools_generated": true,
+  "keywords": ["sharepoint", "onedrive", "microsoft-graph", "entra", "local", "mcp"],
+  "license": "UNLICENSED",
+  "compatibility": {
+    "platforms": ["darwin", "win32"],
+    "runtimes": {
+      "python": ">=3.11,<4"
+    }
+  },
+  "user_config": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Entra tenant ID",
+      "description": "Customer directory GUID (not 'common' or 'organizations'). From the Entra app registration overview.",
+      "required": true
+    },
+    "client_id": {
+      "type": "string",
+      "title": "Entra application (client) ID",
+      "description": "Public desktop app client ID for this tenant. No client secret. Same registration used for SharePoint MCP.",
+      "required": true
+    }
+  }
+}

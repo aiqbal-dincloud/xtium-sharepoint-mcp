@@ -43,15 +43,17 @@ same steps and writes the IDs to `local/test_app.json` (gitignored).
 uv sync
 ```
 
-### 3. Add it to the MCP client
+### 3. Add it to Claude Desktop
 
-Claude Desktop config path depends on the installer:
+**Preferred (pilot packaging):** install the MCPB desktop extension so users enter tenant/client IDs in Claude’s UI:
 
-- **MSIX (this PC):** `%LOCALAPPDATA%\Claude-Data\claude_pzs8sxrjxfjjc\claude_desktop_config.json`
-- **Claude-3p:** `%LOCALAPPDATA%\Claude-3p\claude_desktop_config.json`
-- Older docs mention `%APPDATA%\Claude\…` — that folder often does not exist on MSIX installs.
+1. Build: `.\scripts\pack_mcpb.ps1` → `dist/xtium-sharepoint-0.1.0.mcpb`
+2. In Claude: **Settings → Extensions → Install Extension…** (or double-click / drag the `.mcpb`)
+3. Enter **Entra tenant ID** and **application (client) ID**, then finish
 
-Example `mcpServers` entry:
+Details: [docs/mcpb-install.md](docs/mcpb-install.md).
+
+**Developer fallback** — edit Claude’s `mcpServers` JSON (MSIX path is under `%LOCALAPPDATA%\Claude-Data\…\claude_desktop_config.json`):
 
 ```json
 {
@@ -68,8 +70,7 @@ Example `mcpServers` entry:
 }
 ```
 
-Claude Code and Cursor take the same `command`, `args` and `env` in their own MCP config. Each client is
-verified separately; see the [test packet](docs/wi-25-test-packet.md).
+Claude Code and Cursor take the same `command`, `args` and `env`. Each host is verified separately; see the [test packet](docs/wi-25-test-packet.md).
 
 ### 4. Sign in
 
