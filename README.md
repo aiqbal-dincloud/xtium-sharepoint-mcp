@@ -45,17 +45,18 @@ uv sync
 
 ### 3. Add it to Claude Desktop
 
-**Preferred (pilot packaging):** Claude **plugin** + embedded MCPB so users enter tenant/client IDs in Claude’s UI:
+**Preferred: Claude Desktop extension (MCPB).** Users enter the tenant and client IDs in Claude’s UI; no JSON editing.
 
-1. Build: `.\scripts\pack_mcpb.ps1` → `dist/xtium-sharepoint-0.1.0.mcpb`
-2. Install MCPB: **Settings → Extensions → Install Extension…** (or double-click / drag), **or** install the plugin once it is listed / sideloaded
-3. Enter **Entra tenant ID** and **application (client) ID**, then finish
+1. Get `dist/xtium-sharepoint-0.1.0.mcpb` from this repo (or build it with `.\scripts\pack_mcpb.ps1`).
+2. Install [`uv`](https://docs.astral.sh/uv/) and make sure it is on the user `PATH` (Claude runs `uv run` from the bundle). Then fully quit and reopen Claude.
+3. In **normal Claude Desktop** (signed in with Claude.ai, not the Claude 3P / Agent Manager profile), open **Settings → Extensions → Advanced settings → Install Extension…** and pick the `.mcpb`. You can also double-click it or drag it into Claude.
+4. Enter the **Entra tenant ID** and **application (client) ID**, then finish.
 
-Directory listing uses a **plugin** submission (not the remote MCP connector form): [docs/directory-submission.md](docs/directory-submission.md).  
-Install details: [docs/mcpb-install.md](docs/mcpb-install.md).
+If **Install** is greyed out, your organization restricts extensions. An owner must add the file under **Organization settings → Connectors → Desktop → Add custom extension**, or turn the extension allowlist off. Searching the Directory will not find it: the plugin is not published, and this is a local MCPB, not a remote connector.
 
+The `.mcpb` is unsigned, so Claude shows an “unsigned” warning. Directory listing (a **plugin** submission, not the remote MCP connector form) is described in [docs/directory-submission.md](docs/directory-submission.md). Full install notes are in [docs/mcpb-install.md](docs/mcpb-install.md).
 
-**Developer fallback** — edit Claude’s `mcpServers` JSON (MSIX path is under `%LOCALAPPDATA%\Claude-Data\…\claude_desktop_config.json`):
+**Developer fallback** — edit Claude’s `mcpServers` JSON. For the MSIX build the file is `%LOCALAPPDATA%\Claude-Data\claude_pzs8sxrjxfjjc\claude_desktop_config.json` (the `Roaming\Claude` folder is not used). The Claude 3P profile has its own file under `%LOCALAPPDATA%\Claude-3p\`; do not use it for this connector.
 
 ```json
 {
@@ -76,26 +77,33 @@ Claude Code and Cursor take the same `command`, `args` and `env`. Each host is v
 
 ### 4. Sign in
 
-Ask the assistant to run `sharepoint_sign_in`, or run this first:
+Ask the assistant to run `sharepoint_sign_in`, or run this first (developer install):
 
 ```powershell
 .venv\Scripts\xtium-sharepoint-mcp.exe sign-in
 ```
 
-If the client does not refresh its tool list after sign-in, restart it.
+The search, site, folder and read tools appear only when the session holds the Graph scopes. If you signed in during a chat and the new tools do not show up, quit Claude completely (including the tray icon) and open a new chat.
+
+### Troubleshooting
+
+- **`sharepoint_*` tools missing:** run `get_connection_status` in the same chat. If `signed_in` is true and `available_tools` lists them, start a new chat after a full quit. If Claude only offers `sharepoint_search`, `sharepoint_folder_search` or `read_resource`, those belong to Claude’s own Microsoft 365 connector, not this one.
+- **Wrong account or documents:** Claude’s own Microsoft 365 connector uses your Claude sign-in. Only the XTIUM SharePoint (local) tools use the account you signed in with here, and `get_connection_status` does not return your user name.
+- **“Unable to connect to extension server”:** if a previous sign-in is cached, startup refreshes the token before answering Claude, and Claude gives up after 120 seconds. Quit Claude, delete `token_cache.bin` in the data directory, reopen, and run `sharepoint_sign_in` again.
+- **`uv` not found:** put `%USERPROFILE%\.local\bin` on the user `PATH`, then fully quit and reopen Claude.
 
 ## Optional settings
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `XTIUM_SP_SCOPES` | `User.Read Sites.Read.All Files.Read.All` | Use a smaller set, for example `Files.Read.All` |
-| `XTIUM_SP_DATA_DIR` | `%LOCALAPPDATA%\xtium-sharepoint-mcp` | Token cache, keys and audit log |
+| `XTIUM_SP_DATA_DIR` | `%LOCALAPPDATA%\xtium-sharepoint-mcp` | Token cache, keys and audit log. For the Microsoft Store (MSIX) Claude, Windows redirects this to `%LOCALAPPDATA%\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Local\xtium-sharepoint-mcp`. On macOS the default is `~/.local/share/xtium-sharepoint-mcp` |
 | `XTIUM_SP_AUDIT_RETENTION_DAYS` | `30` | Local audit retention, from 1 to 365 days |
 
 ## Support
 
 - **Disconnect**: run `sharepoint_sign_out` or `xtium-sharepoint-mcp sign-out`. To wipe everything,
-  delete `%LOCALAPPDATA%\xtium-sharepoint-mcp`.
+  delete the data directory (see `XTIUM_SP_DATA_DIR` above; for the Microsoft Store Claude it is under `%LOCALAPPDATA%\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Local\`).
 - **Revoke a user**: in Entra, revoke the user's sessions or remove the app's consent. The connector asks
   them to sign in again at the next token refresh (within about an hour).
 - **Correlate an error**: each error and each audit line carries the Graph `request-id` and a
